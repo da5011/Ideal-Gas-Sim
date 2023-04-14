@@ -14,18 +14,6 @@ program sim
 
     contains
 
-    pure function rng(), result(random)
-        real :: q, random
-        q = rand()
-        if (q > 0.5) then
-            q = -1
-        else
-            q = 1
-        endif
-
-        random = q*rand()
-    end function rng
-
     subroutine preInit
         open(stdin, file = "input.txt", action = "read")
         read(stdin, *) n
@@ -49,7 +37,7 @@ program sim
         do i = 1, n
             x(i) = rand()*bx
             y(i) = rand()*by
-            vx(i) = rando*vrms
+            vx(i) = rand()*vrms
             vy(i) = sqrt(vrms**2 - vx(i)**2)
             write(stdout, *) x(i), y(i), vx(i), vy(i)
         enddo
@@ -86,6 +74,7 @@ program sim
 
                 write(stdout, *) x(i), y(i), vx(i), vy(i)
             end do
+            write(stdout, *) "Step ", j, "complete"
         end do
         write(stdout, *) "Simulation Complete"
     end subroutine loop

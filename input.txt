@@ -1,5 +1,5 @@
-100      !Number of particles
-300     !Temperature (K)
+10      !Number of particles
+400     !Temperature (K)
 15      !Mass (amu)
 5      !Box Length (nm)
 5     !Box Width  (nm)
