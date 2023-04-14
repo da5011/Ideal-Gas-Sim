@@ -73,9 +73,9 @@ program sim
                 endif
 
                 write(stdout, *) x(i), y(i), vx(i), vy(i)
-            end do
+            enddo
             write(stdout, *) "Step ", j, "complete"
-        end do
+        enddo
         write(stdout, *) "Simulation Complete"
     end subroutine loop
 
