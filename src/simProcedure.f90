@@ -4,7 +4,7 @@ module simProcedure
     implicit none
 
     integer :: n, i, j, nSteps, cols, seed
-    real :: bx, by, k, T, m, vrms, stepSize
+    real :: bx, by, k, T, m, stepSize, vrms, vel
     real, allocatable :: x(:), y(:), vx(:), vy(:), xguess(:), yguess(:)
 
     contains
@@ -35,8 +35,9 @@ module simProcedure
         do i = 1, n
             x(i) = rand()*bx
             y(i) = rand()*by
-            vx(i) = plusminone()*vrms
-            vy(i) = sqrt(vrms**2 - vx(i)**2)
+            vel = plusminone()*boxmuller(vrms)
+            vx(i) = plusminone()*rand()*vel
+            vy(i) = plusminone()*sqrt(vrms**2 - vx(i)**2)
             write(stdout, *) x(i), y(i), vx(i), vy(i)
         enddo
     end subroutine initialize

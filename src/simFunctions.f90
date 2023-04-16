@@ -2,26 +2,42 @@ module simFunctions
     use iso_fortran_env, only: stdin => input_unit, stdout => output_unit
     implicit none
 private
-public plusminone, pdf
+public plusminone, pdf, boxmuller
 
 contains
-real pure function plusminone()
-    real :: a, b
+real function plusminone()
+    real :: a
     a = rand()
-    b = rand()
     if (a < 0.5) then
         a = -1
     else 
         a = 1
     endif
-    plusminone = a*b
 end function plusminone
 
 real pure function pdf(x, mean, stdev)
-    real :: x, mean, stdev, pi
+    real, intent(in) :: x, mean, stdev
+    real :: pi
     pi = 3.14159265359
     pdf = (1/(stdev*sqrt(2*pi)))*exp(-0.5*(((x - mean)/stdev)**2))
 end function pdf
 
+real function boxmuller(mean)
+real, optional, intent(in) :: mean
+real :: u, v, m, pi
+pi = 3.14159265359
+
+if(present(mean)) then
+    m = mean
+else
+    m = 0
+endif
+
+u = rand()
+v = rand()
+
+boxmuller = sqrt(-2*log(u))*cos(2*pi*v) + mean
+
+end function boxmuller
 
 end module simFunctions
