@@ -1,8 +1,8 @@
-20           !Number of particles
-400             !Temperature (K)
-15              !Mass (amu)
-5               !Box Length (nm)
-5               !Box Width  (nm)
-10              !Time Steps
-0.1             !Step Size (ps)
+10           !Number of particles
+500             !Temperature (K)
+50              !Molar Mass (g/mol)
+10               !Box Length (nm)
+10               !Box Width  (nm)
+100              !Time Steps
+0.01             !Step Size (ps)
 1234567890      !Seed

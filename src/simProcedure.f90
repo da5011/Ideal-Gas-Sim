@@ -4,7 +4,7 @@ module simProcedure
     implicit none
 
     integer :: n, i, j, nSteps, cols, seed
-    real :: bx, by, k, T, m, stepSize, vrms, vel
+    real :: bx, by, k, T, m, stepSize, vrms, vel, interimForce, totalForce, interimPressure, avgPressure
     real, allocatable :: x(:), y(:), vx(:), vy(:), xguess(:), yguess(:)
 
     contains
@@ -12,6 +12,7 @@ module simProcedure
         k = 1
         !k = (1.380649)*(0.00001) !Boltzmann in nm
         cols = 0
+        totalForce = 0
         open(stdin, file = "IO/input.txt", action = "read")
         read(stdin, *) n
         read(stdin, *) T
@@ -48,6 +49,7 @@ module simProcedure
         write(stdout, *) "Beginning Simulation: ", nSteps, "steps, with ", n, "particles."
         do j = 1, nSteps
             write(stdout, *) "Step ", j, "of", nSteps
+            interimForce = 0
             do i = 1, n
                 xguess(i) = x(i) + vx(i)*stepSize
                 yguess(i) = y(i) + vy(i)*stepSize
@@ -60,6 +62,7 @@ module simProcedure
                     x(i) = x(i) - vx(i)*stepSize
                     vx(i) = -vx(i)
                     cols = cols + 1
+                    interimForce = interimForce + (2*vx(i)/stepSize)
                 else
                     x(i) = xguess(i)
                 endif
@@ -72,13 +75,21 @@ module simProcedure
                     y(i) = y(i) - vy(i)*stepSize
                     vy(i) = -vy(i)
                     cols = cols + 1
+                    interimForce = interimForce + (2*vy(i)/stepSize)
                 else
                     y(i) = yguess(i)
                 endif
-
                 write(stdout, *) x(i), y(i), vx(i), vy(i)
             enddo
+            totalForce = totalForce + interimForce
+            interimPressure = interimForce/(2*bx + 2*by)
+            write(stdout, *) interimPressure
         enddo
+        deallocate(xguess)
+        deallocate(yguess)
+        avgPressure = (totalForce)/(nSteps*(2*bx + 2*by))
         write(stdout, *) "Simulation Complete"
+        write(stdout, *) "# of collisions:", cols
+        write(stdout, *) "Average Pressure:", avgPressure
     end subroutine loop
 end module simProcedure
