@@ -37,7 +37,7 @@ module simProcedure
             y(i) = rand()*by
             vel = plusminone()*boxmuller(vrms)
             vx(i) = plusminone()*rand()*vel
-            vy(i) = plusminone()*sqrt(vrms**2 - vx(i)**2)
+            vy(i) = plusminone()*sqrt(vel**2 - vx(i)**2)
             write(stdout, *) x(i), y(i), vx(i), vy(i)
         enddo
     end subroutine initialize

@@ -9,9 +9,9 @@ real function plusminone()
     real :: a
     a = rand()
     if (a < 0.5) then
-        a = -1
+        plusminone = -1
     else 
-        a = 1
+        plusminone = 1
     endif
 end function plusminone
 
