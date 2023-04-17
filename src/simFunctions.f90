@@ -40,10 +40,4 @@ boxmuller = sqrt(-2*log(u))*cos(2*pi*v) + mean
 
 end function boxmuller
 
-real pure function finalpressure(totalForce, bx, by)
-    integer, intent(in) :: totalForce, bx, by
-    finalpressure = 
-
-end function finalpressure
-
 end module simFunctions
